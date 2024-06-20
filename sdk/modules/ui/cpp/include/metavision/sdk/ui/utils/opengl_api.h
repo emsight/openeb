@@ -12,17 +12,19 @@
 #ifndef METAVISION_SDK_UI_UTILS_OPENGL_API
 #define METAVISION_SDK_UI_UTILS_OPENGL_API
 
-#ifdef _USE_OPENGL_ES3_
-#include <GLES3/gl3.h>
 // While we keep support for OpenGL, we need to provide a
 // dummy implementation for Glew init function
+#ifndef GLEW_OK
 #define GLEW_OK 0
 inline int glewInit(void) {
     return GLEW_OK;
 }
+#endif
+
+#ifdef _USE_OPENGL_ES3_
+#include <GLES3/gl3.h>
 #else // OpenGL
 #if defined(__APPLE__) && !defined(__linux__)
-#include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <OpenGL/gl3.h>
 #elif defined(__linux__)
